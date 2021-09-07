@@ -1,4 +1,5 @@
 import { getWeatherDataOfCity } from "./utils/getWeatherDataOfCity";
+import { getWindDirectionAbbreviationFromDegrees } from "./utils/getWindDirectionAbbreviationFromDegrees";
 
 import { City } from "./interfaces/City";
 
@@ -11,18 +12,17 @@ export class Weather {
 
   public renderIn(targetElementSelector: string): this {
     const targetElement = this.getTargetElement(targetElementSelector);
-    console.log(targetElement);
 
     return this;
   }
 
   public ofCity(city: City): this {
     this.city = { ...city };
-    console.log(this.city);
 
-    getWeatherDataOfCity(this.city).then((weatherDataOfCity) =>
-      console.log(weatherDataOfCity)
-    );
+    getWeatherDataOfCity(this.city).then((weatherDataOfCity) => {
+      console.log(weatherDataOfCity);
+      return weatherDataOfCity;
+    });
 
     return this;
   }
