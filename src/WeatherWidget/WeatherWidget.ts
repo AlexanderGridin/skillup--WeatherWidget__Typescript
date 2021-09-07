@@ -3,7 +3,7 @@ import { getWindDirectionAbbreviationFromDegrees } from "./utils/getWindDirectio
 
 import { City } from "./interfaces/City";
 
-export class Weather {
+export class WeatherWidget {
   private targetElement: Element | null;
   private weatherElement: Element;
   private city: City;
