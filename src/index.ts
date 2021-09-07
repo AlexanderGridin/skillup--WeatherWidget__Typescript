@@ -9,4 +9,4 @@ const kharkiv: City = createCity({
   altitude: 152,
 });
 
-new Weather().of(kharkiv).renderIn("#weather");
+new Weather().ofCity(kharkiv).renderIn("#weather");
