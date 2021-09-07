@@ -1,0 +1,7 @@
+.weather-widget {
+  background: green;
+  border: 1px solid red;
+  color: #fff;
+  height: 100px;
+  width: 100px;
+}

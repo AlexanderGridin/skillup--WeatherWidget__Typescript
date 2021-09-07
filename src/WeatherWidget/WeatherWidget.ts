@@ -1,18 +1,23 @@
 import { getWeatherDataOfCity } from "./utils/getWeatherDataOfCity";
 import { getWindDirectionAbbreviationFromDegrees } from "./utils/getWindDirectionAbbreviationFromDegrees";
 
+import { DOMElement } from "./models/DOMElement";
+
 import { City } from "./interfaces/City";
 
 export class WeatherWidget {
-  private targetElement: Element | null;
-  private weatherElement: Element;
-  private city: City;
+  private weatherWidgetElement!: Node;
+  private city!: City;
 
-  constructor() {}
+  constructor() {
+    this.createWeatherWidgetElement();
+  }
 
   public renderIn(targetElementSelector: string): this {
     const targetElement = this.getTargetElement(targetElementSelector);
+    targetElement?.append(this.weatherWidgetElement);
 
+    console.log(this.weatherWidgetElement);
     return this;
   }
 
@@ -29,5 +34,13 @@ export class WeatherWidget {
 
   private getTargetElement(targetElementSelector: string): Element | null {
     return document.querySelector(targetElementSelector);
+  }
+
+  private createWeatherWidgetElement(): void {
+    this.weatherWidgetElement = new DOMElement({
+      tagName: "div",
+      classNames: ["weather-widget"],
+      textContent: "weather-widget text content",
+    }).get();
   }
 }
