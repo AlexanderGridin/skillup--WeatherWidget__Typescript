@@ -1,6 +1,6 @@
-import { Weather } from "./Weather/Weather";
-import { City } from "./Weather/interfaces/City";
-import { createCity } from "./Weather/utils/createCity";
+import { WeatherWidget } from "./WeatherWidget/WeatherWidget";
+import { City } from "./WeatherWidget/interfaces/City";
+import { createCity } from "./WeatherWidget/utils/createCity";
 
 const kharkiv: City = createCity({
   name: "Kharkiv",
@@ -9,4 +9,4 @@ const kharkiv: City = createCity({
   altitude: 152,
 });
 
-new Weather().ofCity(kharkiv).renderIn("#weather");
+new WeatherWidget().ofCity(kharkiv).renderIn("#weather");
