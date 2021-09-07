@@ -2,7 +2,7 @@ import { City } from "./interfaces/City";
 
 export class Weather {
   private targetElement: Element | null;
-  private calendarElement: Element;
+  private weatherElement: Element;
   private city: City;
 
   constructor() {}
@@ -14,9 +14,10 @@ export class Weather {
     return this;
   }
 
-  public of(city: City): this {
+  public ofCity(city: City): this {
     this.city = { ...city };
     console.log(this.city);
+
     return this;
   }
 
