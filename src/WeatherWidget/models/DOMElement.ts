@@ -12,7 +12,7 @@ export class DOMElement {
       .setInnerHTML(props.innerHTML);
   }
 
-  public get(): Node {
+  public getNode(): Node {
     return this.element as Node;
   }
 

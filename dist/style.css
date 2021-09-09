@@ -17,3 +17,101 @@
   background-color: yellow;
   color: #000;
 }
+
+/**************************/
+
+/*       Погода           */
+
+/**************************/
+.weather-widget {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  max-width: 240px;
+  width: 100%;
+  padding: 15px 10px 20px;
+  color: #000;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 1) 25%,
+    rgba(215, 234, 253, 1) 100%
+  );
+}
+
+.weather-widget__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  line-height: 1;
+  padding: 1px 8px;
+  background-color: #00baef;
+  color: #fff;
+}
+
+.current-weather-icon {
+  max-width: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.current-weather-icon img {
+  max-width: 100%;
+  height: auto !important;
+}
+
+.current-weather {
+  text-align: center;
+  font-size: 12px;
+  padding: 8px;
+}
+
+.current-weather p {
+  margin: 0;
+}
+
+.weather-by-period {
+  padding: 10px;
+  background-color: #00baef;
+  color: #fff;
+  font-size: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.weather-by-period .weather-by-period__item {
+  max-width: 45px;
+  width: 100%;
+  text-align: center;
+}
+
+.weather-by-period .period-title {
+  margin-bottom: 5px;
+}
+
+.weather-by-period .weather-icon {
+  width: 30px;
+  height: 28px;
+}
+
+.weather-by-period .weather-icon .weather-icon__img {
+  height: 28px;
+  display: block !important;
+}
+
+.weather__footer {
+  text-align: right;
+  padding-top: 8px;
+  font-size: 10px;
+}
+
+.weather__footer a:link,
+.weather__footer a:visited {
+  color: #000;
+  text-decoration: underline;
+}
+
+.weather__footer a:hover {
+  text-decoration: none;
+}

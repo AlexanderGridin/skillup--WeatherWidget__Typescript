@@ -1,35 +1,56 @@
 import { getWeatherDataOfCity } from "./utils/getWeatherDataOfCity";
 import { getWindDirectionAbbreviationFromDegrees } from "./utils/getWindDirectionAbbreviationFromDegrees";
+import { getHoursFromDateTimeString } from "./utils/getHoursFromDateTimeString";
+import { createWeatherTypeIconByWeatherSymbolCode } from "./utils/createWeatherTypeIconByWeatherSymbolCode";
+import { getFullTemperatureValue } from "./utils/getFullTemperatureValue";
 
 import { DOMElement } from "./models/DOMElement";
 
 import { City } from "./interfaces/City";
 
 export class WeatherWidget {
+  private targetElement!: Element | null;
   private weatherWidgetElement!: Node;
   private city!: City;
+  private weatherData!: any; // TODO: fix data type
+  private currentWeatherData!: any; // TODO: fix data type
 
   constructor() {
-    this.createWeatherWidgetElement();
+    console.log(getHoursFromDateTimeString("2021-09-09T09:00:00Z"));
   }
 
   public renderIn(targetElementSelector: string): this {
-    const targetElement = this.getTargetElement(targetElementSelector);
-    targetElement?.append(this.weatherWidgetElement);
+    this.targetElement = this.getTargetElement(targetElementSelector);
 
-    console.log(this.weatherWidgetElement);
+    getWeatherDataOfCity(this.city).then((weatherDataOfCity) => {
+      let {
+        properties: { timeseries },
+      } = weatherDataOfCity as any; //TODO: fix data type
+
+      this.weatherData = timeseries;
+      this.currentWeatherData = timeseries[0];
+
+      console.log(this.weatherData);
+      console.log(this.currentWeatherData);
+
+      this.createWeatherWidgetElement();
+      this.render();
+
+      return weatherDataOfCity;
+    });
+
     return this;
   }
 
   public ofCity(city: City): this {
     this.city = { ...city };
-
-    getWeatherDataOfCity(this.city).then((weatherDataOfCity) => {
-      console.log(weatherDataOfCity);
-      return weatherDataOfCity;
-    });
+    console.log(this.city);
 
     return this;
+  }
+
+  private render(): void {
+    this.targetElement?.append(this.weatherWidgetElement);
   }
 
   private getTargetElement(targetElementSelector: string): Element | null {
@@ -40,20 +61,50 @@ export class WeatherWidget {
     this.weatherWidgetElement = new DOMElement({
       tagName: "div",
       classNames: ["weather-widget"],
-      textContent: "weather-widget text content",
-    }).get();
+    }).getNode();
 
     this.weatherWidgetElement.appendChild(this.createWeatherWidgetHeader());
     this.weatherWidgetElement.appendChild(this.createWeatherWidgetBody());
     this.weatherWidgetElement.appendChild(this.createWeatherWidgetFooter());
+
+    this.weatherWidgetElement.appendChild(
+      createWeatherTypeIconByWeatherSymbolCode("fair_day")
+    );
   }
 
   private createWeatherWidgetHeader(): Node {
+    const cityName = new DOMElement({
+      tagName: "div",
+      classNames: ["city-name"],
+      textContent: `${this.city.name}`,
+    }).getNode();
+
+    const weatherIcon = new DOMElement({
+      tagName: "div",
+      classNames: ["current-weather-icon"],
+    }).getNode();
+
+    weatherIcon.appendChild(
+      createWeatherTypeIconByWeatherSymbolCode(
+        this.currentWeatherData.data.next_1_hours.summary.symbol_code
+      )
+    );
+
+    const temperature = new DOMElement({
+      tagName: "div",
+      textContent: getFullTemperatureValue(
+        this.currentWeatherData.data.instant.details.air_temperature
+      ),
+    }).getNode();
+
     const weatherWidgetHeader = new DOMElement({
       tagName: "div",
       classNames: ["weather-widget__header"],
-      textContent: "weather-widget__header text content",
-    }).get();
+    }).getNode();
+
+    weatherWidgetHeader.appendChild(cityName);
+    weatherWidgetHeader.appendChild(weatherIcon);
+    weatherWidgetHeader.appendChild(temperature);
 
     return weatherWidgetHeader as Node;
   }
@@ -63,7 +114,7 @@ export class WeatherWidget {
       tagName: "div",
       classNames: ["weather-widget__body"],
       textContent: "weather-widget__body text content",
-    }).get();
+    }).getNode();
 
     return weatherWidgetBody as Node;
   }
@@ -73,7 +124,7 @@ export class WeatherWidget {
       tagName: "div",
       classNames: ["weather-widget__footer"],
       textContent: "weather-widget__footer text content",
-    }).get();
+    }).getNode();
 
     return weatherWidgetFooter as Node;
   }
