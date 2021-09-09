@@ -42,5 +42,39 @@ export class WeatherWidget {
       classNames: ["weather-widget"],
       textContent: "weather-widget text content",
     }).get();
+
+    this.weatherWidgetElement.appendChild(this.createWeatherWidgetHeader());
+    this.weatherWidgetElement.appendChild(this.createWeatherWidgetBody());
+    this.weatherWidgetElement.appendChild(this.createWeatherWidgetFooter());
+  }
+
+  private createWeatherWidgetHeader(): Node {
+    const weatherWidgetHeader = new DOMElement({
+      tagName: "div",
+      classNames: ["weather-widget__header"],
+      textContent: "weather-widget__header text content",
+    }).get();
+
+    return weatherWidgetHeader as Node;
+  }
+
+  private createWeatherWidgetBody(): Node {
+    const weatherWidgetBody = new DOMElement({
+      tagName: "div",
+      classNames: ["weather-widget__body"],
+      textContent: "weather-widget__body text content",
+    }).get();
+
+    return weatherWidgetBody as Node;
+  }
+
+  private createWeatherWidgetFooter(): Node {
+    const weatherWidgetFooter = new DOMElement({
+      tagName: "div",
+      classNames: ["weather-widget__footer"],
+      textContent: "weather-widget__footer text content",
+    }).get();
+
+    return weatherWidgetFooter as Node;
   }
 }

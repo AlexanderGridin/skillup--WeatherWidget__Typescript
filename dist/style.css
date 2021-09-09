@@ -2,6 +2,18 @@
   background: green;
   border: 1px solid red;
   color: #fff;
-  height: 100px;
-  width: 100px;
+}
+
+.weather-widget__header {
+  background-color: blue;
+}
+
+.weather-widget__body {
+  background-color: #fff;
+  color: #000;
+}
+
+.weather-widget__footer {
+  background-color: yellow;
+  color: #000;
 }

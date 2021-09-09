@@ -12,6 +12,16 @@ export class DOMElement {
       .setInnerHTML(props.innerHTML);
   }
 
+  public get(): Node {
+    return this.element as Node;
+  }
+
+  public appendChild(child: Element): this {
+    this.element?.append(child as Node);
+
+    return this;
+  }
+
   private createElement(tagName: string): this {
     let createdElement: Element = document.createElement(tagName);
     this.element = createdElement;
@@ -53,9 +63,5 @@ export class DOMElement {
     }
 
     return this;
-  }
-
-  public get(): Node {
-    return this.element as Node;
   }
 }
