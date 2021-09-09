@@ -7,6 +7,7 @@ export const createWeatherTypeIconByWeatherSymbolCode = (
 
   return new DOMElement({
     tagName: "img",
+    classNames: ["weather-icon__img"],
     attributes: [
       {
         name: "src",
