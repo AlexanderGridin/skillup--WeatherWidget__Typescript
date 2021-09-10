@@ -1,0 +1,131 @@
+:root,
+body {
+  overflow-x: hidden;
+  position: relative;
+}
+
+:root {
+  font-size: 1em;
+  box-sizing: border-box;
+  line-height: 1.3;
+  font-family: "Montserrat", Arial, sans-serif;
+}
+
+*,
+::before,
+::after {
+  box-sizing: inherit;
+  margin: 0;
+}
+
+.visually-hidden {
+  position: absolute;
+  clip: rect(0, 0, 0, 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.page-title {
+  text-align: center;
+  margin: 75px 0 35px;
+}
+
+/**************************/
+
+/*       Weather Widget   */
+
+/**************************/
+.weather-widget {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  max-width: 450px;
+  margin: auto;
+  width: 100%;
+  padding: 15px 10px 20px;
+  color: #000;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 1) 25%,
+    rgba(215, 234, 253, 1) 100%
+  );
+}
+
+.weather-widget__error {
+  max-width: 320px;
+  padding: 10px;
+  border: 1px solid orange;
+  text-align: center;
+  margin: auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.weather-widget__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.3rem;
+  line-height: 1;
+  padding: 7px 15px;
+  background-color: #00baef;
+  color: #fff;
+}
+
+.weather-widget__header .weather-icon {
+  max-width: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.current-weather {
+  text-align: center;
+  font-size: 1.5rem;
+  padding: 8px;
+}
+
+.current-weather p {
+  margin: 0;
+}
+
+.daily-intervals {
+  padding: 15px;
+  background-color: #00baef;
+  color: #fff;
+  font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.daily-interval {
+  max-width: 33%;
+  width: 100%;
+  text-align: center;
+  padding: 0 7px;
+}
+
+.daily-interval__title {
+  margin-bottom: 5px;
+}
+
+.weather-widget__footer {
+  text-align: right;
+  padding-top: 20px;
+  font-size: 1rem;
+}
+
+.weather-widget__footer a:link,
+.weather-widget__footer a:visited {
+  color: #000;
+  text-decoration: underline;
+}
+
+.weather-widget__footer a:hover {
+  text-decoration: none;
+}
