@@ -1,6 +1,6 @@
 import { getHoursFromDateTimeString } from "./getHoursFromDateTimeString";
 
-export const getDailyIntervalNameFromTime = (time: string): string => {
+export const getDailyIntervalNameByTime = (time: string): string => {
   let dailyIntervalName: string = "";
   let hours: number = getHoursFromDateTimeString(time);
 

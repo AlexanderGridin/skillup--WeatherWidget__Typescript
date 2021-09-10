@@ -56,6 +56,15 @@ img {
   );
 }
 
+.weather-widget__error {
+  max-width: 320px;
+  padding: 10px;
+  border: 1px solid orange;
+  text-align: center;
+  margin: auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
 .weather-widget__header {
   display: flex;
   justify-content: space-between;
@@ -67,7 +76,7 @@ img {
   color: #fff;
 }
 
-.current-weather-icon {
+.weather-widget__header .weather-icon {
   max-width: 64px;
   display: flex;
   align-items: center;
@@ -105,18 +114,18 @@ img {
   margin-bottom: 5px;
 }
 
-.weather__footer {
+.weather-widget__footer {
   text-align: right;
-  padding-top: 8px;
-  font-size: 10px;
+  padding-top: 20px;
+  font-size: 1rem;
 }
 
-.weather__footer a:link,
-.weather__footer a:visited {
+.weather-widget__footer a:link,
+.weather-widget__footer a:visited {
   color: #000;
   text-decoration: underline;
 }
 
-.weather__footer a:hover {
+.weather-widget__footer a:hover {
   text-decoration: none;
 }
