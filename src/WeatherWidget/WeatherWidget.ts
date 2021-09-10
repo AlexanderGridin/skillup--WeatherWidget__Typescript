@@ -1,8 +1,8 @@
 import { getWeatherDataOfCity } from "./utils/getWeatherDataOfCity";
 import { getWindDirectionAbbreviationFromDegrees } from "./utils/getWindDirectionAbbreviationFromDegrees";
 import { getFullTemperatureValue } from "./utils/getFullTemperatureValue";
-import { getWeatherTypeNameFromSymbolCode } from "./utils/getReadableWeatherTypeFromSymbolCode";
-import { getDailyIntervalNameFromTime } from "./utils/getDailyIntervalNameFromTime";
+import { getWeatherTypeNameBySymbolCode } from "./utils/getWeatherTypeNameBySymbolCode";
+import { getDailyIntervalNameByTime } from "./utils/getDailyIntervalNameByTime";
 import { createWeatherTypeIconByWeatherSymbolCode } from "./utils/createWeatherTypeIconByWeatherSymbolCode";
 import { isDailyIntervalPoint } from "./utils/isDailyIntervalPoint";
 
@@ -17,55 +17,71 @@ export class WeatherWidget {
   private weatherData!: any; // TODO: fix data type
   private currentWeatherData!: any; // TODO: fix data type
 
-  public renderIn(targetElementSelector: string): this {
-    this.targetElement = this.getTargetElement(targetElementSelector);
-
-    getWeatherDataOfCity(this.city).then((weatherDataOfCity) => {
-      let {
-        properties: { timeseries },
-      } = weatherDataOfCity as any; //TODO: fix data type
-
-      this.weatherData = timeseries;
-      this.currentWeatherData = timeseries[0];
-
-      console.log(this.weatherData);
-      console.log(this.currentWeatherData);
-
-      this.createWeatherWidgetElement().render();
-
-      return weatherDataOfCity;
-    });
-
-    return this;
-  }
-
   public ofCity(city: City): this {
     this.city = { ...city };
     return this;
   }
 
-  private render(): void {
-    this.targetElement?.append(this.weatherWidgetElement);
+  public renderIn(targetElementSelector: string): this {
+    this.targetElement = this.getTargetElement(targetElementSelector);
+
+    if (this.targetElement) {
+      this.loadWeatherDataOfCity();
+    }
+
+    if (!this.targetElement) {
+      console.warn("[Weather Widget]: Target element not found");
+    }
+
+    return this;
   }
 
   private getTargetElement(targetElementSelector: string): Element | null {
     return document.querySelector(targetElementSelector);
   }
 
-  private createWeatherWidgetElement(): this {
+  private loadWeatherDataOfCity(): this {
+    getWeatherDataOfCity(this.city)
+      .then((weatherDataOfCity) => {
+        this.handleWeatherDataOfCity(weatherDataOfCity)
+          .createElement()
+          .render();
+      })
+      .catch((err) => {
+        this.renderError("[Weather Widget]: Something went wrong...");
+      });
+
+    return this;
+  }
+
+  private handleWeatherDataOfCity(weatherDataOfCity: any): this {
+    let {
+      properties: { timeseries },
+    } = weatherDataOfCity as any; //TODO: fix data type
+
+    this.weatherData = timeseries;
+    this.currentWeatherData = timeseries[0];
+
+    // console.log(this.weatherData);
+    // console.log(this.currentWeatherData);
+
+    return this;
+  }
+
+  private createElement(): this {
     this.weatherWidgetElement = new DOMElement({
       tagName: "div",
       classNames: ["weather-widget"],
     }).getNode();
 
-    this.weatherWidgetElement.appendChild(this.createWeatherWidgetHeader());
-    this.weatherWidgetElement.appendChild(this.createWeatherWidgetBody());
-    // this.weatherWidgetElement.appendChild(this.createWeatherWidgetFooter());
+    this.weatherWidgetElement.appendChild(this.createHeader());
+    this.weatherWidgetElement.appendChild(this.createBody());
+    this.weatherWidgetElement.appendChild(this.createFooter());
 
     return this;
   }
 
-  private createWeatherWidgetHeader(): Node {
+  private createHeader(): Node {
     const cityName: string = this.city.name;
 
     const weatherSymbolCode: string =
@@ -75,28 +91,28 @@ export class WeatherWidget {
       this.currentWeatherData.data.instant.details.air_temperature;
     const fullTemperatureValue: string = getFullTemperatureValue(temperature);
 
-    const cityNameElement = new DOMElement({
+    const cityNameElement: Node = new DOMElement({
       tagName: "div",
       classNames: ["city-name"],
       textContent: `${cityName}`,
     }).getNode();
 
-    const weatherIconElement = new DOMElement({
+    const weatherIconElement: Node = new DOMElement({
       tagName: "div",
-      classNames: ["current-weather-icon"],
+      classNames: ["weather-icon"],
     }).getNode();
 
     weatherIconElement.appendChild(
       createWeatherTypeIconByWeatherSymbolCode(weatherSymbolCode)
     );
 
-    const temperatureElement = new DOMElement({
+    const temperatureElement: Node = new DOMElement({
       tagName: "div",
-      classNames: ["current-temperature"],
+      classNames: ["temperature"],
       textContent: fullTemperatureValue,
     }).getNode();
 
-    const weatherWidgetHeader = new DOMElement({
+    const weatherWidgetHeader: Node = new DOMElement({
       tagName: "div",
       classNames: ["weather-widget__header"],
     }).getNode();
@@ -105,11 +121,11 @@ export class WeatherWidget {
     weatherWidgetHeader.appendChild(weatherIconElement);
     weatherWidgetHeader.appendChild(temperatureElement);
 
-    return weatherWidgetHeader as Node;
+    return weatherWidgetHeader;
   }
 
-  private createWeatherWidgetBody(): Node {
-    const weatherWidgetBody = new DOMElement({
+  private createBody(): Node {
+    const weatherWidgetBody: Node = new DOMElement({
       tagName: "div",
       classNames: ["weather-widget__body"],
     }).getNode();
@@ -117,14 +133,14 @@ export class WeatherWidget {
     weatherWidgetBody.appendChild(this.createCurrentWeatherElement());
     weatherWidgetBody.appendChild(this.createWeatherOfDailyIntervalsElement());
 
-    return weatherWidgetBody as Node;
+    return weatherWidgetBody;
   }
 
   private createCurrentWeatherElement(): Node {
     const weatherSymbolCode: string =
       this.currentWeatherData.data.next_1_hours.summary.symbol_code;
     const weatherTypeName: string =
-      getWeatherTypeNameFromSymbolCode(weatherSymbolCode);
+      getWeatherTypeNameBySymbolCode(weatherSymbolCode);
 
     const windSpeed: number =
       this.currentWeatherData.data.instant.details.wind_speed;
@@ -133,12 +149,12 @@ export class WeatherWidget {
     const windDirectionAbbreviation: string =
       getWindDirectionAbbreviationFromDegrees(windDirectionInDegrees);
 
-    const weatherTypeElement = new DOMElement({
+    const weatherTypeElement: Node = new DOMElement({
       tagName: "p",
       textContent: `${weatherTypeName}`,
     }).getNode();
 
-    const windElement = new DOMElement({
+    const windElement: Node = new DOMElement({
       tagName: "p",
       textContent: `${windSpeed}м/с, ${windDirectionAbbreviation}`,
     }).getNode();
@@ -158,7 +174,7 @@ export class WeatherWidget {
     let totalDailyIntervalPoints: number = 0;
     const LIMIT_OF_DAILY_INTERVAL_POINTS = 4;
 
-    const weatherOfDayliIntervalsElement = new DOMElement({
+    const weatherOfDayliIntervalsElement: Node = new DOMElement({
       tagName: "div",
       classNames: ["daily-intervals"],
     }).getNode();
@@ -193,15 +209,15 @@ export class WeatherWidget {
       weatherDataItem.data.instant.details.air_temperature;
     const fullTemperatureValue = getFullTemperatureValue(temperature);
 
-    const dailyIntervalTitle: string = getDailyIntervalNameFromTime(time);
+    const dailyIntervalTitle: string = getDailyIntervalNameByTime(time);
 
-    const dailyIntervalTitleElement = new DOMElement({
+    const dailyIntervalTitleElement: Node = new DOMElement({
       tagName: "div",
       classNames: ["daily-interval__title"],
       textContent: `${dailyIntervalTitle}`,
     }).getNode();
 
-    const weatherIconElement = new DOMElement({
+    const weatherIconElement: Node = new DOMElement({
       tagName: "div",
       classNames: ["daily-interval__weather-icon"],
     }).getNode();
@@ -210,13 +226,13 @@ export class WeatherWidget {
       createWeatherTypeIconByWeatherSymbolCode(weatherSymbolCode)
     );
 
-    const dailyIntervalTemperature = new DOMElement({
+    const dailyIntervalTemperature: Node = new DOMElement({
       tagName: "div",
       classNames: ["daily-interval__temerature"],
       textContent: `${fullTemperatureValue}`,
     }).getNode();
 
-    const dailyIntervalItemElement = new DOMElement({
+    const dailyIntervalItemElement: Node = new DOMElement({
       tagName: "div",
       classNames: ["daily-interval"],
     }).getNode();
@@ -228,13 +244,55 @@ export class WeatherWidget {
     return dailyIntervalItemElement;
   }
 
-  private createWeatherWidgetFooter(): Node {
-    const weatherWidgetFooter = new DOMElement({
-      tagName: "div",
-      classNames: ["weather-widget__footer"],
-      textContent: "weather-widget__footer text content",
+  private createFooter(): Node {
+    const viewMoreLinkElement: Node = new DOMElement({
+      tagName: "a",
+      classNames: ["view-more__link"],
+      textContent: "Погода на 2 недели",
+      attributes: [
+        {
+          name: "href",
+          value: "https://www.gismeteo.ua/weather-kharkiv-5053/2-weeks/",
+        },
+        {
+          name: "target",
+          value: "_blank",
+        },
+      ],
     }).getNode();
 
-    return weatherWidgetFooter as Node;
+    const viewMoreElement: Node = new DOMElement({
+      tagName: "div",
+      classNames: ["view-more"],
+    }).getNode();
+
+    viewMoreElement.appendChild(viewMoreLinkElement);
+
+    const weatherWidgetFooter: Node = new DOMElement({
+      tagName: "div",
+      classNames: ["weather-widget__footer"],
+    }).getNode();
+
+    weatherWidgetFooter.appendChild(viewMoreElement);
+
+    return weatherWidgetFooter;
+  }
+
+  private render(): this {
+    this.targetElement?.append(this.weatherWidgetElement);
+
+    return this;
+  }
+
+  private renderError(errorText: string): this {
+    const errorElement = new DOMElement({
+      tagName: "div",
+      classNames: ["weather-widget__error"],
+      textContent: errorText,
+    }).getNode();
+
+    this.targetElement?.appendChild(errorElement);
+
+    return this;
   }
 }
