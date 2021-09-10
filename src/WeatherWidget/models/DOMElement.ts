@@ -2,23 +2,23 @@ import { VirtualElement } from "../interfaces/VirtualElement";
 import { VirtualAttribute } from "../interfaces/VirtualAttribute";
 
 export class DOMElement {
-  private element!: Element;
+  private HTMLElement!: HTMLElement;
 
   constructor(props: VirtualElement) {
-    this.createElement(props.tagName)
+    this.createHTMLElement(props.tagName)
       .setClassNames(props.classNames)
       .setAttributes(props.attributes)
       .setTextContent(props.textContent)
       .setInnerHTML(props.innerHTML);
   }
 
-  public getNode(): Node {
-    return this.element as Node;
+  public getHTMLElement(): HTMLElement {
+    return this.HTMLElement;
   }
 
-  private createElement(tagName: string): this {
-    let createdElement: Element = document.createElement(tagName);
-    this.element = createdElement;
+  private createHTMLElement(tagName: string): this {
+    let createdElement: HTMLElement = document.createElement(tagName);
+    this.HTMLElement = createdElement;
 
     return this;
   }
@@ -26,7 +26,7 @@ export class DOMElement {
   private setClassNames(classNames: string[] | undefined): this {
     if (classNames) {
       for (let className of classNames) {
-        this.element.classList.add(className);
+        this.HTMLElement.classList.add(className);
       }
     }
 
@@ -36,7 +36,7 @@ export class DOMElement {
   private setAttributes(attributes: VirtualAttribute[] | undefined): this {
     if (attributes) {
       for (let attribute of attributes) {
-        this.element.setAttribute(attribute.name, attribute.value);
+        this.HTMLElement.setAttribute(attribute.name, attribute.value);
       }
     }
 
@@ -45,7 +45,7 @@ export class DOMElement {
 
   private setTextContent(textContent: string | undefined): this {
     if (textContent) {
-      this.element.textContent = textContent;
+      this.HTMLElement.textContent = textContent;
     }
 
     return this;
@@ -53,7 +53,7 @@ export class DOMElement {
 
   private setInnerHTML(innerHTML: string | undefined): this {
     if (innerHTML) {
-      this.element.innerHTML = innerHTML;
+      this.HTMLElement.innerHTML = innerHTML;
     }
 
     return this;

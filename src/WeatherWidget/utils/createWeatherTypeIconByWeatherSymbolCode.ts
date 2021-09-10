@@ -18,5 +18,5 @@ export const createWeatherTypeIconByWeatherSymbolCode = (
         value: `${symbolCode}`,
       },
     ],
-  }).getNode() as HTMLImageElement;
+  }).getHTMLElement() as HTMLImageElement;
 };

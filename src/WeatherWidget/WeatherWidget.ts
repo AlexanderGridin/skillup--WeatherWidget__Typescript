@@ -72,7 +72,7 @@ export class WeatherWidget {
     this.weatherWidgetElement = new DOMElement({
       tagName: "div",
       classNames: ["weather-widget"],
-    }).getNode();
+    }).getHTMLElement();
 
     this.weatherWidgetElement.appendChild(this.createHeader());
     this.weatherWidgetElement.appendChild(this.createBody());
@@ -95,12 +95,12 @@ export class WeatherWidget {
       tagName: "div",
       classNames: ["city-name"],
       textContent: `${cityName}`,
-    }).getNode();
+    }).getHTMLElement();
 
     const weatherIconElement: Node = new DOMElement({
       tagName: "div",
       classNames: ["weather-icon"],
-    }).getNode();
+    }).getHTMLElement();
 
     weatherIconElement.appendChild(
       createWeatherTypeIconByWeatherSymbolCode(weatherSymbolCode)
@@ -110,12 +110,12 @@ export class WeatherWidget {
       tagName: "div",
       classNames: ["temperature"],
       textContent: fullTemperatureValue,
-    }).getNode();
+    }).getHTMLElement();
 
     const weatherWidgetHeader: Node = new DOMElement({
       tagName: "div",
       classNames: ["weather-widget__header"],
-    }).getNode();
+    }).getHTMLElement();
 
     weatherWidgetHeader.appendChild(cityNameElement);
     weatherWidgetHeader.appendChild(weatherIconElement);
@@ -128,7 +128,7 @@ export class WeatherWidget {
     const weatherWidgetBody: Node = new DOMElement({
       tagName: "div",
       classNames: ["weather-widget__body"],
-    }).getNode();
+    }).getHTMLElement();
 
     weatherWidgetBody.appendChild(this.createCurrentWeatherElement());
     weatherWidgetBody.appendChild(this.createWeatherOfDailyIntervalsElement());
@@ -152,17 +152,17 @@ export class WeatherWidget {
     const weatherTypeElement: Node = new DOMElement({
       tagName: "p",
       textContent: `${weatherTypeName}`,
-    }).getNode();
+    }).getHTMLElement();
 
     const windElement: Node = new DOMElement({
       tagName: "p",
       textContent: `${windSpeed}м/с, ${windDirectionAbbreviation}`,
-    }).getNode();
+    }).getHTMLElement();
 
     const currentWeatherElement: Node = new DOMElement({
       tagName: "div",
       classNames: ["current-weather"],
-    }).getNode();
+    }).getHTMLElement();
 
     currentWeatherElement.appendChild(weatherTypeElement);
     currentWeatherElement.appendChild(windElement);
@@ -177,7 +177,7 @@ export class WeatherWidget {
     const weatherOfDayliIntervalsElement: Node = new DOMElement({
       tagName: "div",
       classNames: ["daily-intervals"],
-    }).getNode();
+    }).getHTMLElement();
 
     for (let i: number = 0; i < this.weatherData.length; i++) {
       // TODO: fix data type
@@ -215,12 +215,12 @@ export class WeatherWidget {
       tagName: "div",
       classNames: ["daily-interval__title"],
       textContent: `${dailyIntervalTitle}`,
-    }).getNode();
+    }).getHTMLElement();
 
     const weatherIconElement: Node = new DOMElement({
       tagName: "div",
       classNames: ["daily-interval__weather-icon"],
-    }).getNode();
+    }).getHTMLElement();
 
     weatherIconElement.appendChild(
       createWeatherTypeIconByWeatherSymbolCode(weatherSymbolCode)
@@ -230,12 +230,12 @@ export class WeatherWidget {
       tagName: "div",
       classNames: ["daily-interval__temerature"],
       textContent: `${fullTemperatureValue}`,
-    }).getNode();
+    }).getHTMLElement();
 
     const dailyIntervalItemElement: Node = new DOMElement({
       tagName: "div",
       classNames: ["daily-interval"],
-    }).getNode();
+    }).getHTMLElement();
 
     dailyIntervalItemElement.appendChild(dailyIntervalTitleElement);
     dailyIntervalItemElement.appendChild(weatherIconElement);
@@ -259,19 +259,19 @@ export class WeatherWidget {
           value: "_blank",
         },
       ],
-    }).getNode();
+    }).getHTMLElement();
 
     const viewMoreElement: Node = new DOMElement({
       tagName: "div",
       classNames: ["view-more"],
-    }).getNode();
+    }).getHTMLElement();
 
     viewMoreElement.appendChild(viewMoreLinkElement);
 
     const weatherWidgetFooter: Node = new DOMElement({
       tagName: "div",
       classNames: ["weather-widget__footer"],
-    }).getNode();
+    }).getHTMLElement();
 
     weatherWidgetFooter.appendChild(viewMoreElement);
 
@@ -289,7 +289,7 @@ export class WeatherWidget {
       tagName: "div",
       classNames: ["weather-widget__error"],
       textContent: errorText,
-    }).getNode();
+    }).getHTMLElement();
 
     this.targetElement?.appendChild(errorElement);
 
