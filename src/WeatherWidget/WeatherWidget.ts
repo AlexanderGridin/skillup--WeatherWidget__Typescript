@@ -43,6 +43,8 @@ export class WeatherWidget {
   private loadWeatherDataOfCity(): this {
     getWeatherDataOfCity(this.city)
       .then((weatherDataOfCity) => {
+        console.log(weatherDataOfCity);
+
         this.handleWeatherDataOfCity(weatherDataOfCity)
           .createElement()
           .render();

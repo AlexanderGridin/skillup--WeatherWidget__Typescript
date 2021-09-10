@@ -2,7 +2,7 @@ import { getHoursFromDateTimeString } from "./getHoursFromDateTimeString";
 
 export const getDailyIntervalNameByTime = (time: string): string => {
   let dailyIntervalName: string = "";
-  let hours: number = getHoursFromDateTimeString(time);
+  let hours: number | null = getHoursFromDateTimeString(time);
 
   switch (hours) {
     case 0:

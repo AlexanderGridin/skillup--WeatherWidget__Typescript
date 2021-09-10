@@ -1,2 +1,13 @@
-export const getHoursFromDateTimeString = (dateString: string): number =>
-  new Date(dateString).getHours();
+export const getHoursFromDateTimeString = (
+  dateString: string
+): number | null => {
+  const hours: number | null = new Date(dateString).getHours();
+
+  if (isNaN(hours)) {
+    console.error("[getHoursFromDateTimeString]: invalid date string");
+
+    return null;
+  }
+
+  return hours;
+};
