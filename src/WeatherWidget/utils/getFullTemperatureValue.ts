@@ -11,7 +11,7 @@ export const getFullTemperatureValue = (temperatureValue: number): string => {
   }
 
   if (temperatureValue < 0) {
-    result += `-${temperatureValue}`;
+    result += `${temperatureValue}`;
   }
 
   result += "°С";

@@ -2,7 +2,7 @@ import { DOMElement } from "../models/DOMElement";
 
 export const createWeatherTypeIconByWeatherSymbolCode = (
   symbolCode: string
-): Node => {
+): HTMLImageElement => {
   const weatherIconsFolderPath: string = "./images/weather-icons/";
 
   return new DOMElement({
@@ -18,5 +18,5 @@ export const createWeatherTypeIconByWeatherSymbolCode = (
         value: `${symbolCode}`,
       },
     ],
-  }).getNode();
+  }).getNode() as HTMLImageElement;
 };
