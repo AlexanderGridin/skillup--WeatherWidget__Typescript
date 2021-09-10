@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npx webpack"
+    "build": "npx webpack",
+    "serve": "npx webpack -w"
   },
   "keywords": [],
   "author": "",
