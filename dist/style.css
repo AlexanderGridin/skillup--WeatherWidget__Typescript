@@ -11,6 +11,11 @@ body {
   font-family: "Montserrat", Arial, sans-serif;
 }
 
+body {
+  height: 100%;
+  background-image: url(./images/sun-pattern.png);
+}
+
 *,
 ::before,
 ::after {
@@ -41,6 +46,10 @@ img {
 /*       Weather Widget   */
 
 /**************************/
+#weather {
+  padding: 25px 0;
+}
+
 .weather-widget {
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
   max-width: 450px;
